@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	var addr = flag.String("addr", ":8081", "website address")
+	var addr = flag.String("addr", ":8080", "website address")
 	flag.Parse()
 	mux := http.NewServeMux()
 	mux.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("public"))))
