@@ -52,7 +52,7 @@
             <div class="form-group">
                <label for="inputWho" class="col-sm-2 control-label">Who</label>
                 <div class="col-sm-10">
-                  <input type="text" id="inputWho" class="form-control" value="dpg3k" readonly>
+                  <input type="text" id="inputWho" class="form-control" value="dpg3k">
                 </div>
             </div>
 
@@ -124,6 +124,7 @@
 
       $("#submit").on("click",function(){
         //e.preventDefault();
+        var requester = 'dpg3k';
         var who = $("#inputWho").val();
         var school = $("#inputSchool").val();
         var degree = $("#inputDegree").val();
@@ -131,8 +132,9 @@
         $.ajax( {
            method: 'POST',
            url: 'http://docker2.lib.virginia.edu:8220/?auth=94DE1D63-72F1-44A1-BC7D-F12FC951',
+//           url: 'http://localhost:8080/?auth=94DE1D63-72F1-44A1-BC7D-F12FC951',
            contentType: 'application/json; charset=UTF-8',
-           data: JSON.stringify( {for: who, school: school, degree: degree} )
+           data: JSON.stringify( {requester: requester, for: who, school: school, degree: degree} )
            }
 
         ).fail(function( r, s, e ){

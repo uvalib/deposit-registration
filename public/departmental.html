@@ -47,10 +47,10 @@
 
     <div class="container">
 
-        <div id="uploadForm" class="form-horizontal">
+        <div id="registerForm" class="form-horizontal">
 
             <div class="form-group">
-                <label for="inputSchool" class="col-sm-2 control-label">Your School</label>
+                <label for="inputSchool" class="col-sm-2 control-label">School</label>
                 <div class="col-sm-10">
                     <select class="form-control" id="inputSchool">
                         <option></option>
@@ -59,16 +59,27 @@
             </div>
 
             <div class="form-group">
-                <label for="inputFile" class="col-sm-2 control-label">File Upload</label>
-                <input type="file" id="inputFile">
-                <p class="help-block">CSV file containing student information.</p>
+                <label for="inputDegree" class="col-sm-2 control-label">Degree</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="inputDegree">
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputWho" class="col-sm-2 control-label">User List</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="inputWho" rows="5"></textarea>
+                </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-success">Submit</button> or <a href="/">cancel</a>
+                    <button id="submit" class="btn btn-success">Submit</button> or <a href="/">cancel</a>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -98,7 +109,7 @@
         }
         ).done(function(d, s, r){
            var schools = d.options.school;
-           //var degrees = d.options.degree;
+           var degrees = d.options.degree;
 
            $.each( schools, function( key, value ) {
               $('#inputSchool')
@@ -106,33 +117,35 @@
                  .text(value));
            });
 
-           //$.each( degrees, function( key, value ) {
-           //   $('#inputDegree')
-           //      .append($('<option>')
-           //      .text(value));
-           //});
+           $.each( degrees, function( key, value ) {
+              $('#inputDegree')
+                 .append($('<option>')
+                 .text(value));
+           });
         });
 
-      //$("#submit").on("click",function(){
+      $("#submit").on("click",function(){
         //e.preventDefault();
-      //  var who = $("#inputWho").val();
-      //  var school = $("#inputSchool").val();
-      //  var degree = $("#inputDegree").val();
+        var requester = 'dpg3k';
+        var who = $("#inputWho").val();
+        var school = $("#inputSchool").val();
+        var degree = $("#inputDegree").val();
 
-      //  $.ajax( {
-      //     method: 'POST',
-      //     url: 'http://docker2.lib.virginia.edu:8220/?auth=94DE1D63-72F1-44A1-BC7D-F12FC951',
-      //     contentType: 'application/json; charset=UTF-8',
-      //     data: JSON.stringify( {for: who, school: school, degree: degree} )
-      //     }
+        $.ajax( {
+           method: 'POST',
+           url: 'http://docker2.lib.virginia.edu:8220/?auth=94DE1D63-72F1-44A1-BC7D-F12FC951',
+//           url: 'http://localhost:8080/?auth=94DE1D63-72F1-44A1-BC7D-F12FC951',
+           contentType: 'application/json; charset=UTF-8',
+           data: JSON.stringify( {requester: requester, for: who, school: school, degree: degree} )
+           }
 
-      //  ).fail(function( r, s, e ){
-      //    alert("Failed to create registration: " + e );
-      //  }
-      //  ).done(function(d, s, r){
-      //    location.href = "index.html";
-      //  });
-      //});
+        ).fail(function( r, s, e ){
+          alert("Failed to create registration: " + e );
+        }
+        ).done(function(d, s, r){
+          location.href = "index.html";
+        });
+      });
     });
 </script>
 
