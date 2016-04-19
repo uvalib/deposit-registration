@@ -99,7 +99,7 @@
 
         $.ajax( {
            method: 'GET',
-           url: 'http://docker2.lib.virginia.edu:8220/options',
+           url: 'http://docker1.lib.virginia.edu:8220/options',
            }
 
         ).fail(function( r, s, e ){
@@ -131,8 +131,7 @@
 
         $.ajax( {
            method: 'POST',
-           url: 'http://docker2.lib.virginia.edu:8220/?auth=94DE1D63-72F1-44A1-BC7D-F12FC951',
-//           url: 'http://localhost:8080/?auth=94DE1D63-72F1-44A1-BC7D-F12FC951',
+           url: 'http://docker1.lib.virginia.edu:8220/?auth=94DE1D63-72F1-44A1-BC7D-F12FC951',
            contentType: 'application/json; charset=UTF-8',
            data: JSON.stringify( {requester: requester, for: who, department: department, degree: degree} )
            }
