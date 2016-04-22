@@ -23,16 +23,17 @@ class RegistrationsController < ApplicationController
   # POST /registrations
   # POST /registrations.json
   def create
+    parameters = registration_params
+    flash[:user_list] = parameters[:user_list]
+    invalid_ids = Register.validate(parameters[:user_list].split(/\W+/))
 #    @registration = Registration.new(registration_params)
 
     respond_to do |format|
-      # if @registration.save
-      #   format.html { redirect_to @registration, notice: 'Registration was successfully created.' }
-      #   format.json { render :show, status: :created, location: @registration }
-      # else
-        format.html { render :new, status: :unprocessable_entity }
- #       format.json { render json: @registration.errors, status: :unprocessable_entity }
-#      end
+      if invalid_ids.length == 0
+        format.html { redirect_to :back, notice: view_context.format_success_message() }
+      else
+        format.html { redirect_to :back, { notice: view_context.format_bad_computing_ids(invalid_ids) } }
+      end
     end
   end
 
