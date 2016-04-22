@@ -1,14 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>DepositRegistration</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deposit Registration</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+<!-- Static navbar -->
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Deposit Registration</a>
+		</div>
+	</div><!--/.container-fluid -->
+</nav>
 
+<div class="container">
 <%= yield %>
+</div>
+<div class="footer">
+	<div class="container">
+		<p class="muted credit">University of Virginia</p>
+	</div>
+</div>
 
 </body>
 </html>
