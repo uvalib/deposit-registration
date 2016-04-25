@@ -26,14 +26,29 @@ class RegistrationsController < ApplicationController
   def create
     parameters = registration_params
     flash[:user_list] = parameters[:user_list]
-    invalid_ids = Register.validate(parameters[:user_list].split(/\W+/))
-#    @registration = Registration.new(registration_params)
+    flash[:department] = parameters[:department]
+    flash[:degree] = parameters[:degree]
+    invalid_ids = Register.validate(parameters[:user_list])
+    success = false
+    if invalid_ids.length > 0
+      notice = view_context.format_bad_computing_ids(invalid_ids)
+    else
+      # TODO-PER: After netbadge auth is added, then the computing ID will be whoever is logged in.
+      requester_id = "dpg3k"
+      error_message = Register.register(requester_id, parameters[:department], parameters[:degree], parameters[:user_list])
+      if error_message
+        notice = error_message
+      else
+        notice = view_context.format_success_message()
+        success = true
+      end
+    end
 
     respond_to do |format|
-      if invalid_ids.length == 0
-        format.html { redirect_to :back, notice: view_context.format_success_message() }
+      if success
+        format.html { redirect_to :back, notice: notice }
       else
-        format.html { redirect_to :back, { notice: view_context.format_bad_computing_ids(invalid_ids) } }
+        format.html { redirect_to :back, { notice: notice } }
       end
     end
   end
