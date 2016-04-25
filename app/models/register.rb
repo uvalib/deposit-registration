@@ -11,4 +11,17 @@ class Register
 		}
 		return invalid_ids
 	end
+
+	def self.options()
+		begin
+			response = HTTParty.get(OPTIONS_URL)
+			if response.code == 200
+				return response['options']
+			else
+				return {'department' => [], 'degree' => []}
+			end
+		rescue
+			return {'department' => [], 'degree' => []}
+		end
+	end
 end

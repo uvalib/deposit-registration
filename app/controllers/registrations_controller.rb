@@ -14,6 +14,7 @@ class RegistrationsController < ApplicationController
 
   # GET /registrations/new
   def new
+    @options = Register.options
   end
 
   # # GET /registrations/1/edit
