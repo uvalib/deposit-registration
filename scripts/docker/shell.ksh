@@ -14,19 +14,4 @@ USERINFO_URL=http://docker1.lib.virginia.edu:8010
 
 DOCKER_ENV="-e API_TOKEN=$API_TOKEN -e DEPOSITREG_URL=$DEPOSITREG_URL -e USERINFO_URL=$USERINFO_URL"
 
-# stop the running instance
-docker stop $INSTANCE
-
-# remove the instance
-docker rm $INSTANCE
-
-# remove the previously tagged version
-docker rmi $NAMESPACE/$INSTANCE:current  
-
-# tag the latest as the current
-docker tag -f $NAMESPACE/$INSTANCE:latest $NAMESPACE/$INSTANCE:current
-
-docker run -d -p 8221:3000 $DOCKER_ENV --name $INSTANCE $NAMESPACE/$INSTANCE:latest
-
-# return status
-exit $?
+docker run -t -i -p 8221:3000 $DOCKER_ENV $NAMESPACE/$INSTANCE /bin/bash

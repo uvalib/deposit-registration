@@ -1,12 +1,25 @@
 FROM centos:7
 
-ENV APP_HOME /deposit-reg
-RUN mkdir -p $APP_HOME/scripts $APP_HOME/bin $APP_HOME/public
+RUN yum -y update && yum -y install which tar epel-release && yum -y install nodejs
 
-EXPOSE 8080
-CMD scripts/entry.sh
+# install rvm
+RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+RUN \curl -sSL https://get.rvm.io | /bin/bash -s stable
+
+# install ruby
+RUN /bin/bash -l -c "rvm requirements"
+RUN /bin/bash -l -c "rvm install 2.3.0"
+RUN /bin/bash -l -c "rvm use 2.3.0 --default"
+RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
+
+# create work directory
+ENV APP_HOME /deposit-register
+RUN mkdir $APP_HOME
+
+ADD . $APP_HOME
 WORKDIR $APP_HOME
 
-COPY scripts/entry.sh $APP_HOME/scripts/entry.sh
-COPY bin/deposit-reg.linux $APP_HOME/bin/deposit-reg
-COPY public/ $APP_HOME/public/
+RUN /bin/bash -l -c "bundle install"
+
+EXPOSE 3000
+CMD /bin/bash -l -c "scripts/entry.sh"

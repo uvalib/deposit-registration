@@ -4,7 +4,7 @@ if [ -z "$DOCKER_HOST" ]; then
 fi
 
 # set the definitions
-INSTANCE=deposit-reg
+INSTANCE=deposit-registration
 NAMESPACE=uvadave
 
 # build the image
