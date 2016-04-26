@@ -12,6 +12,10 @@ RUN /bin/bash -l -c "rvm install 2.3.0"
 RUN /bin/bash -l -c "rvm use 2.3.0 --default"
 RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 
+# define port and startup script
+EXPOSE 3000
+CMD /bin/bash -l -c "scripts/entry.sh"
+
 # create work directory
 ENV APP_HOME /deposit-register
 RUN mkdir $APP_HOME
@@ -20,6 +24,3 @@ ADD . $APP_HOME
 WORKDIR $APP_HOME
 
 RUN /bin/bash -l -c "bundle install"
-
-EXPOSE 3000
-CMD /bin/bash -l -c "scripts/entry.sh"
