@@ -40,6 +40,9 @@ class RegistrationsController < ApplicationController
         notice = error_message
       else
         notice = view_context.format_success_message()
+        flash[:user_list] = nil
+        flash[:department] = nil
+        flash[:degree] = nil
         success = true
       end
     end
