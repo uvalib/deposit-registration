@@ -1,0 +1,47 @@
+<%= if flash[:notice]
+		raw(flash[:notice])
+		end
+%>
+
+<%= form_tag("/registrations", method: "post") do %>
+<div id="registerForm" class="form-horizontal">
+
+	<div class="form-group">
+		<label for="department" class="col-sm-2 control-label">Department</label>
+		<div class="col-sm-10">
+			<select class="form-control" id="department" name="registration[department]">
+				<option></option>
+				<% @options['department'].each { |option| %>
+					<option <%= "selected" if flash[:department] == option %>><%= option %></option>
+				<% } %>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="degree" class="col-sm-2 control-label">Degree</label>
+		<div class="col-sm-10">
+			<select class="form-control" id="degree" name="registration[degree]">
+				<option></option>
+				<% @options['degree'].each { |option| %>
+					<option <%= "selected" if flash[:degree] == option %>><%= option %></option>
+					<% } %>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="user_list" class="col-sm-2 control-label">User List</label>
+		<div class="col-sm-10">
+			<textarea class="form-control" id="user_list" rows="5" name="registration[user_list]"><%= flash[:user_list] %></textarea>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button id="submit" class="btn btn-success">Submit</button>
+		</div>
+	</div>
+
+</div>
+<% end %>
