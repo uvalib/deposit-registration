@@ -18,25 +18,17 @@ RUN groupadd -r webservice && useradd -r -g webservice webservice
 ENV APP_HOME /deposit-register
 WORKDIR $APP_HOME
 
-# Create directories and update permissions
-#RUN chown -R webservice $APP_HOME && chgrp -R webservice $APP_HOME
-#RUN mkdir /home/webservice
-#RUN chown -R webservice /home/webservice && chgrp -R webservice /home/webservice
-#RUN chown -R webservice /usr/local/rvm/gems/ruby-2.3.0 && chgrp -R webservice /usr/local/rvm/gems/ruby-2.3.0
-
-# Specify the user
-#USER webservice
-
-# define port and startup script
-#EXPOSE 3000
-#CMD /bin/bash -l -c "scripts/entry.sh"
-
 # Add necessary assets and bundle
 RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 COPY . $APP_HOME
 RUN /bin/bash -l -c "bundle install"
 
+# Update permissions
 RUN chown -R webservice $APP_HOME && chgrp -R webservice $APP_HOME
+
+# Specify the user
 USER webservice
+
+# define port and startup script
 EXPOSE 3000
 CMD /bin/bash -l -c "scripts/entry.sh"
