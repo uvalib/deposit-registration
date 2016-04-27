@@ -10,17 +10,33 @@ RUN \curl -sSL https://get.rvm.io | /bin/bash -s stable
 RUN /bin/bash -l -c "rvm requirements"
 RUN /bin/bash -l -c "rvm install 2.3.0"
 RUN /bin/bash -l -c "rvm use 2.3.0 --default"
-RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 
-# define port and startup script
-EXPOSE 3000
-CMD /bin/bash -l -c "scripts/entry.sh"
+# Create the run user and group
+RUN groupadd -r webservice && useradd -r -g webservice webservice
 
-# create work directory
+# Specify home 
 ENV APP_HOME /deposit-register
-RUN mkdir $APP_HOME
-
-ADD . $APP_HOME
 WORKDIR $APP_HOME
 
+# Create directories and update permissions
+#RUN chown -R webservice $APP_HOME && chgrp -R webservice $APP_HOME
+#RUN mkdir /home/webservice
+#RUN chown -R webservice /home/webservice && chgrp -R webservice /home/webservice
+#RUN chown -R webservice /usr/local/rvm/gems/ruby-2.3.0 && chgrp -R webservice /usr/local/rvm/gems/ruby-2.3.0
+
+# Specify the user
+#USER webservice
+
+# define port and startup script
+#EXPOSE 3000
+#CMD /bin/bash -l -c "scripts/entry.sh"
+
+# Add necessary assets and bundle
+RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
+COPY . $APP_HOME
 RUN /bin/bash -l -c "bundle install"
+
+RUN chown -R webservice $APP_HOME && chgrp -R webservice $APP_HOME
+USER webservice
+EXPOSE 3000
+CMD /bin/bash -l -c "scripts/entry.sh"
