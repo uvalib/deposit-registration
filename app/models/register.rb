@@ -1,9 +1,18 @@
 class Register
 
-	def self.validate(computing_id_list)
+	def self.validate_department( department )
+	   department.nil? == false && department.blank? == false
+	end
 
+	def self.validate_degree( degree )
+		degree.nil? == false && degree.blank? == false
+	end
+
+	def self.validate_user_list( user_id_list )
+
+		return false if user_id_list.nil? || user_id_list.empty?
 		begin
-			ids = Register.parse_computing_ids(computing_id_list)
+			ids = Register.parse_user_ids( user_id_list )
 			invalid_ids = []
 			ids.each { |computing_id|
 				url = "#{USERINFO_URL}/user/#{computing_id}?auth=#{API_TOKEN}"
@@ -14,10 +23,10 @@ class Register
 				end
 			}
 
-			return invalid_ids
+			return invalid_ids.empty?, invalid_ids
 	  rescue => e
 		   puts e
-			 return ids
+			 return false, ids
 		end
 
 	end
@@ -43,22 +52,22 @@ class Register
 
 		begin
 			url = "#{DEPOSITREG_URL}/?auth=#{API_TOKEN}"
-			ids = Register.parse_computing_ids(computing_id_list)
+			ids = Register.parse_user_ids(computing_id_list)
 			ids = ids.join(",")
 			data = { requester: requester, for: ids, department: department, degree: degree }
 			response = HTTParty.post(url, body: JSON.dump(data), headers: { 'Content-Type' => 'application/json' })
-			return nil if response.code == 200
-			return response.message
+			return true, nil if response.code == 200
+			return false, response.message
 		rescue => e
 			puts e
-			return nil
+			return false, e.message
 		end
 
 	end
 
-	def self.parse_computing_ids(computing_id_list)
+	def self.parse_user_ids( user_id_list )
 		# Takes a string and turns it into an array of computing ids.
-		return computing_id_list.split(/\W+/) if computing_id_list.present?
+		return user_id_list.split(/\W+/) if user_id_list.present?
 		return []
 	end
 end

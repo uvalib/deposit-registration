@@ -28,22 +28,32 @@ class RegistrationsController < ApplicationController
     flash[:user_list] = parameters[:user_list]
     flash[:department] = parameters[:department]
     flash[:degree] = parameters[:degree]
-    invalid_ids = Register.validate(parameters[:user_list])
+
     success = false
-    if invalid_ids.length > 0
-      notice = view_context.format_bad_computing_ids(invalid_ids)
+    notice = nil
+
+    if Register.validate_department( parameters[:department] ) == false
+      notice = view_context.format_bad_department_message( parameters[:department] )
+    elsif Register.validate_degree( parameters[:degree] ) == false
+      notice = view_context.format_bad_degree_message( parameters[:degree] )
     else
+      success, invalid_ids = Register.validate_user_list( parameters[:user_list] )
+       if success == false
+         notice = view_context.format_bad_computing_ids_message( invalid_ids )
+       end
+    end
+
+    if success == true
       # TODO-PER: After netbadge auth is added, then the computing ID will be whoever is logged in.
       requester_id = "dpg3k"
-      error_message = Register.register(requester_id, parameters[:department], parameters[:degree], parameters[:user_list])
-      if error_message
-        notice = error_message
-      else
-        notice = view_context.format_success_message()
+      success, error_message = Register.register(requester_id, parameters[:department], parameters[:degree], parameters[:user_list])
+      if success
+        notice = view_context.format_success_message( )
         flash[:user_list] = nil
         flash[:department] = nil
         flash[:degree] = nil
-        success = true
+      else
+        notice = view_context.format_service_error_message( error_message )
       end
     end
 
