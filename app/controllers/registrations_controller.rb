@@ -14,13 +14,6 @@ class RegistrationsController < ApplicationController
 
   # GET /registrations/new
   def new
-    if request.env['HTTP_REMOTE_USER'].present?
-      @requester_id = request.env['HTTP_REMOTE_USER']
-      puts "===> using supplied user (#{@requester_id})"
-    else
-      @requester_id = 'dpg3k'
-      puts "===> using default user (#{@requester_id})"
-    end
     @options = Register.options
   end
 
@@ -31,6 +24,7 @@ class RegistrationsController < ApplicationController
   # POST /registrations
   # POST /registrations.json
   def create
+
     parameters = registration_params
     flash[:user_list] = parameters[:user_list]
     flash[:department] = parameters[:department]
@@ -38,6 +32,14 @@ class RegistrationsController < ApplicationController
 
     success = false
     notice = nil
+
+    if request.env['HTTP_REMOTE_USER'].present?
+      @requester_id = request.env['HTTP_REMOTE_USER']
+      puts "===> using supplied user (#{@requester_id})"
+    else
+      @requester_id = 'dpg3k'
+      puts "===> using default user (#{@requester_id})"
+    end
 
     if Register.validate_department( parameters[:department] ) == false
       notice = view_context.format_bad_department_message( parameters[:department] )
