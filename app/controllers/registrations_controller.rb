@@ -14,8 +14,8 @@ class RegistrationsController < ApplicationController
 
   # GET /registrations/new
   def new
-    if request.env['REMOTE_USER'].present?
-      @requester_id = request.env['REMOTE_USER']
+    if request.env['HTTP_REMOTE_USER'].present?
+      @requester_id = request.env['HTTP_REMOTE_USER']
       puts "===> using supplied user (#{@requester_id})"
     else
       @requester_id = 'dpg3k'
