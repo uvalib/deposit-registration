@@ -14,6 +14,13 @@ class RegistrationsController < ApplicationController
 
   # GET /registrations/new
   def new
+    if request.env['REMOTE_USER'].present?
+      @requester_id = request.env['REMOTE_USER']
+      puts "===> using supplied user (#{@requester_id})"
+    else
+      @requester_id = 'dpg3k'
+      puts "===> using default user (#{@requester_id})"
+    end
     @options = Register.options
   end
 
@@ -44,9 +51,7 @@ class RegistrationsController < ApplicationController
     end
 
     if success == true
-      # TODO-PER: After netbadge auth is added, then the computing ID will be whoever is logged in.
-      requester_id = "dpg3k"
-      success, error_message = Register.register(requester_id, parameters[:department], parameters[:degree], parameters[:user_list])
+      success, error_message = Register.register( @requester_id, parameters[:department], parameters[:degree], parameters[:user_list])
       if success
         notice = view_context.format_success_message( )
         flash[:user_list] = nil
