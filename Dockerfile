@@ -22,6 +22,7 @@ WORKDIR $APP_HOME
 RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 COPY . $APP_HOME
 RUN /bin/bash -l -c "bundle install"
+RUN /bin/bash -l -c "rake assets:precompile"
 
 # Update permissions
 RUN chown -R webservice $APP_HOME && chgrp -R webservice $APP_HOME
