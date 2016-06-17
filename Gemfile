@@ -46,3 +46,8 @@ end
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 gem 'httparty'
+
+# added during the move to Alpine linux
+gem 'bigdecimal'
+gem 'tzinfo-data'
+gem 'nokogiri', '1.6.7.2'
