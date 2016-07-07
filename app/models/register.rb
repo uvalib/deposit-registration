@@ -70,4 +70,31 @@ class Register
 		return user_id_list.split(/\W+/) if user_id_list.present?
 		return []
 	end
+
+	def self.check_depositreg_endpoint
+		begin
+			response = HTTParty.get("#{DEPOSITREG_URL}/healthcheck")
+			if response.code == 200
+				return true, ''
+			else
+				return false, "Endpoint returns #{response.code}"
+			end
+		rescue => ex
+			return false, "Endpoint returns #{ex}"
+		end
+	end
+
+	def self.check_userinfo_endpoint
+		begin
+			response = HTTParty.get("#{USERINFO_URL}/healthcheck")
+			if response.code == 200
+				return true, ''
+			else
+				return false, "Endpoint returns #{response.code}"
+			end
+		rescue => ex
+			return false, "Endpoint returns #{ex}"
+		end
+	end
+
 end
