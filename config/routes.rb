@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   resources :healthcheck, only: [ :index ]
+  resources :version, only: [ :index ]
 
   # You can have the root of your site routed with "root"
   root 'registrations#new'
