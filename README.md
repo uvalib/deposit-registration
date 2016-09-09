@@ -1,4 +1,4 @@
-# Libra 2 Admin
+# Libra 2 Deposit Registration
 
 * Project started as a plain Rails 5 app, generated with `rails new deposit-registration -O`
 

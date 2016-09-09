@@ -1,7 +1,6 @@
-<%= if flash[:notice]
-		raw(flash[:notice])
-		end
-%>
+<% if flash[:notice] %>
+		<%= raw( flash[:notice] ) %>
+<% end %>
 
 <%= form_tag("/registrations", method: "post") do %>
 <div id="registerForm" class="form-horizontal">
