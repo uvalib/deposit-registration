@@ -1,5 +1,7 @@
 class VersionController < ApplicationController
 
+  skip_before_action :require_auth
+
   # the response
   class VersionResponse
 
