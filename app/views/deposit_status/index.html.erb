@@ -1,0 +1,25 @@
+
+<h1><%= @title %></h1>
+
+<%= form_tag '/deposit_status', :method => 'get' do %>
+    <p>
+      <%= text_field_tag :lookup, params[:lookup] %>
+      <%= submit_tag "Lookup", :name => nil %>
+    </p>
+<% end %>
+
+<% if @deposits.empty? == false %>
+<table class="deposit-index data-table six-col display compact" cellspacing="0" width="100%">
+
+  <%= render "header" %>
+
+  <tbody>
+
+  <% @deposits.each do |deposit| %>
+      <%= render "deposit", deposit: deposit %>
+  <% end %>
+
+  </tbody>
+</table>
+
+<% end %>

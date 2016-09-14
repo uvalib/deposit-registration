@@ -14,14 +14,6 @@ class RegistrationsController < ApplicationController
     success = false
     notice = nil
 
-    if request.env['HTTP_REMOTE_USER'].present?
-      requester_id = request.env['HTTP_REMOTE_USER']
-      puts "===> using supplied user (#{requester_id})"
-    else
-      requester_id = 'dpg3k'
-      puts "===> using default user (#{requester_id})"
-    end
-
     if Register.validate_department( parameters[:department] ) == false
       notice = view_context.format_bad_department_message( parameters[:department] )
     elsif Register.validate_degree( parameters[:degree] ) == false
@@ -34,7 +26,7 @@ class RegistrationsController < ApplicationController
     end
 
     if success == true
-      success, error_message = Register.register( requester_id, parameters[:department], parameters[:degree], parameters[:user_list])
+      success, error_message = Register.register( current_user, parameters[:department], parameters[:degree], parameters[:user_list])
       if success
         notice = view_context.format_success_message( )
         flash[:user_list] = nil
