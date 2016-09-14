@@ -17,6 +17,7 @@ class HealthcheckController < ApplicationController
   # the response
   class HealthCheckResponse
 
+    attr_accessor :depositauth
     attr_accessor :depositreg
     attr_accessor :userinfo
 
@@ -39,6 +40,10 @@ class HealthcheckController < ApplicationController
     status = {}
 
     # check the deposit registration endpoint
+    rc, message = DepositStatus.check_depositauth_endpoint
+    status[ :depositauth ] = Health.new( rc, message )
+
+    # check the deposit registration endpoint
     rc, message = Register.check_depositreg_endpoint
     status[ :depositreg ] = Health.new( rc, message )
 
@@ -51,6 +56,7 @@ class HealthcheckController < ApplicationController
 
   def make_response( health_status )
     r = HealthCheckResponse.new
+    r.depositauth = health_status[ :depositauth ]
     r.depositreg = health_status[ :depositreg ]
     r.userinfo = health_status[ :userinfo ]
 
