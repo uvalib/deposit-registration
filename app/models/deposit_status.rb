@@ -16,7 +16,7 @@ class DepositStatus
 	def self.check_depositauth_endpoint
 		begin
 			response = HTTParty.get("#{DEPOSITAUTH_URL}/healthcheck")
-			if response.code == 200
+			if status_ok?( response.code )
 				return true, ''
 			else
 				return false, "Endpoint returns #{response.code}"

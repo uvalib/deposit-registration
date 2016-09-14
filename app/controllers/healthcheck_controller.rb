@@ -22,7 +22,7 @@ class HealthcheckController < ApplicationController
     attr_accessor :userinfo
 
     def is_healthy?
-      depositreg.healthy && userinfo.healthy
+      depositauth.healthy && depositreg.healthy && userinfo.healthy
     end
   end
 
