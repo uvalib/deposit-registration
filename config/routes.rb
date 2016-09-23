@@ -8,5 +8,10 @@ Rails.application.routes.draw do
   resources :version, only: [ :index ]
 
   # You can have the root of your site routed with "root"
-  root 'registrations#new'
+  root to: redirect( path: '/registrations' )
+
+  # explicit routes
+  get '/registrations' => 'registrations#new'
+  get '/deposit_status' => 'registrations#index'
+
 end
