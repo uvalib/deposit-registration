@@ -2,7 +2,7 @@
   <td><%= deposit['computing_id'] %></td>
   <td><%= "#{deposit['last_name']}, #{deposit['first_name']}" %></td>
   <td><%= formatted_date( deposit['created_at'] ) %></td>
-  <td><%= formatted_date( deposit['approved_at'] ) %></td>
+  <td><%= formatted_date( deposit['accepted_at'] ) %></td>
   <td><%= deposit['exported_at'].blank? ? 'pending' : formatted_date( deposit['exported_at'] ) %></td>
   <td><%= truncate( deposit['title'], length: 75 ) %></td>
 </tr>
