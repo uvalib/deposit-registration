@@ -38,11 +38,7 @@ class RegistrationsController < ApplicationController
     end
 
     respond_to do |format|
-      if success
-        format.html { redirect_to :back, notice: notice }
-      else
-        format.html { redirect_to :back, { notice: notice } }
-      end
+      format.html { redirect_to :back, notice: notice }
     end
   end
 

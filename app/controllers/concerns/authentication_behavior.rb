@@ -8,7 +8,7 @@ module AuthenticationBehavior
 	private
 
 	def current_user
-		return ENV['HTTP_REMOTE_USER'] if Rails.env == 'development'
+		return ENV['HTTP_REMOTE_USER'] #if Rails.env == 'development'
 		return request.env['HTTP_REMOTE_USER']
 	end
 
