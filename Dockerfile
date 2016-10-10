@@ -1,7 +1,7 @@
 FROM alpine:3.4
 
 # Add necessary packages
-RUN apk --update add bash tzdata ruby ruby-dev build-base nodejs sqlite-dev zlib-dev libxml2-dev libxslt-dev libffi-dev
+RUN apk --update add bash tzdata ruby ruby-dev build-base nodejs sqlite-dev zlib-dev libxml2-dev libxslt-dev libffi-dev ca-certificates
 
 # Create the run user and group
 RUN addgroup webservice && adduser webservice -G webservice -D
@@ -18,12 +18,12 @@ WORKDIR $APP_HOME
 RUN gem install bundler io-console --no-ri --no-rdoc
 RUN gem install \
 nio4r:1.2.1 \
-byebug:9.0.5 \
+byebug:9.0.6 \
 debug_inspector:0.0.2 \
 ffi:1.9.14 \
 json:2.0.2 \
 puma:3.6.0 \
-nokogiri:1.6.8 \
+nokogiri:1.6.8.1 \
 websocket-driver:0.6.4 \
 bigdecimal:1.2.7 \
 --no-ri --no-rdoc
