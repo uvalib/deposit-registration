@@ -4,18 +4,15 @@ class DepositStatusController < ApplicationController
 
     @lookup = params[:lookup]
     @deposits = []
+    @title = 'Deposit status'
     status = :ok
 
     # are we doing a lookup
-    if @lookup.blank?
-      @title = 'Lookup deposit status by computing Id'
-    else
-      @title = "Deposit information for students matching '#{@lookup}'"
+    if @lookup.blank? == false
       status, details = DepositStatus.get_status( @lookup )
       if DepositStatus.status_ok?( status ) == true
         @deposits = details
       end
-
     end
 
     respond_to do |format|
