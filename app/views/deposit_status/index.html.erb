@@ -1,6 +1,4 @@
 
-<h1><%= @title %></h1>
-
 <%= form_tag '/deposit_status', :method => 'get' do %>
     <p>
       <%= text_field_tag :lookup, params[:lookup] %>
