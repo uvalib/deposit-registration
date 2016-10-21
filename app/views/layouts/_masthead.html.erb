@@ -16,5 +16,14 @@
 			<% end %>
 			<span class="search-scope"><%= @title %></span>
 		</div>
+    <% if @instructions %>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+         <li>
+           <%= link_to 'Instructions for Registrars', 'http://www.library.virginia.edu/libra/libra-optional-deposit', target: '_blank' %>
+         </li>
+      </ul>
+    </div><!--/.nav-collapse -->
+    <% end %>
 	</div>
 </nav>

@@ -2,6 +2,7 @@ class RegistrationsController < ApplicationController
 
   def new
     @title = 'Libra Deposit Registration'
+    @instructions = true
     @options = Register.options
   end
 
