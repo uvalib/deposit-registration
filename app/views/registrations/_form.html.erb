@@ -2,8 +2,15 @@
 		<%= raw( flash[:notice] ) %>
 <% end %>
 
+
 <%= form_tag("/registrations", method: "post") do %>
 <div id="registerForm" class="form-horizontal">
+
+  <% if @instructions %>
+  <div class="form-group">
+    <label class="col-sm-2 control-label"><%= @instructions %></label>
+  </div>
+  <% end %>
 
 	<div class="form-group">
 		<label for="department" class="col-sm-2 control-label">Department</label>

@@ -5,8 +5,6 @@ class DepositStatusController < ApplicationController
     @lookup = params[:lookup]
     @deposits = []
     @title = 'Libra Deposit Status'
-    @instructions = false
-
     status = :ok
 
     # are we doing a lookup

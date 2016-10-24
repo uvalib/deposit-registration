@@ -2,8 +2,8 @@ class RegistrationsController < ApplicationController
 
   def new
     @title = 'Libra Deposit Registration'
-    @instructions = true
     @options = Register.options
+    @instructions = view_context.link_to 'Instructions for Registrars', 'http://www.library.virginia.edu/libra/libra-optional-deposit', target: '_blank'
   end
 
   def create
