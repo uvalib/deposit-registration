@@ -13,7 +13,7 @@ RUN cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Add necessary gems
 RUN gem install bundler io-console --no-ri --no-rdoc
 
-# Copy the Gemfile and Gemfile.lock into the image and temporarily set the working directory to where they are.
+# Copy the Gemfile into the image and temporarily set the working directory to where they are.
 WORKDIR /tmp
 ADD Gemfile Gemfile
 RUN bundle install
@@ -34,7 +34,7 @@ USER webservice
 
 # define port and startup script
 EXPOSE 3000
-CMD /bin/bash -l -c "scripts/entry.sh"
+CMD scripts/entry.sh
 
 # move in the profile
 COPY data/container_bash_profile /home/webservice/.profile
