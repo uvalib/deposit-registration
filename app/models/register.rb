@@ -1,5 +1,8 @@
 class Register
 
+	# Adds status check behavior
+	include StatusBehavior
+
 	def self.validate_department( department )
 	   department.nil? == false && department.blank? == false
 	end
@@ -16,10 +19,11 @@ class Register
 			invalid_ids = []
 			ids.each { |computing_id|
 				url = "#{USERINFO_URL}/user/#{computing_id}?auth=#{API_TOKEN}"
+				#puts "==> #{url}"
 				response = HTTParty.get(url)
 
-				if response.code == 404
-					invalid_ids.push(computing_id)
+				if self.status_ok?( response.code ) == false
+					invalid_ids.push( computing_id )
 				end
 			}
 
@@ -34,8 +38,11 @@ class Register
 	def self.options()
 
 		begin
-			response = HTTParty.get("#{DEPOSITREG_URL}/options")
-			if response.code == 200
+			url = "#{DEPOSITREG_URL}/options"
+			#puts "==> #{url}"
+			response = HTTParty.get(url)
+
+			if self.status_ok?( response.code )
 				return response['options']
 			else
 				# If the server is available, but there is an error in getting the options.
@@ -52,11 +59,12 @@ class Register
 
 		begin
 			url = "#{DEPOSITREG_URL}/?auth=#{API_TOKEN}"
+			#puts "==> #{url}"
 			ids = Register.parse_user_ids(computing_id_list)
 			ids = ids.join(",")
 			data = { requester: requester, for: ids, department: department, degree: degree }
 			response = HTTParty.post(url, body: JSON.dump(data), headers: { 'Content-Type' => 'application/json' })
-			return true, nil if response.code == 200
+			return true, nil if self.status_ok?( response.code )
 			return false, response.message
 		rescue => e
 			puts e
@@ -73,8 +81,11 @@ class Register
 
 	def self.check_depositreg_endpoint
 		begin
-			response = HTTParty.get("#{DEPOSITREG_URL}/healthcheck")
-			if response.code == 200
+			url = "#{DEPOSITREG_URL}/healthcheck"
+			#puts "==> #{url}"
+			response = HTTParty.get(url)
+
+			if self.status_ok?( response.code )
 				return true, ''
 			else
 				return false, "Endpoint returns #{response.code}"
@@ -86,8 +97,11 @@ class Register
 
 	def self.check_userinfo_endpoint
 		begin
-			response = HTTParty.get("#{USERINFO_URL}/healthcheck")
-			if response.code == 200
+			url = "#{USERINFO_URL}/healthcheck"
+			#puts "==> #{url}"
+			response = HTTParty.get(url)
+
+			if self.status_ok?( response.code )
 				return true, ''
 			else
 				return false, "Endpoint returns #{response.code}"

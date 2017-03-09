@@ -1,11 +1,15 @@
 class DepositStatus
 
+	# Adds status check behavior
+	include StatusBehavior
+
 	def self.get_status( computing_id )
 
 		begin
 			url = "#{DEPOSITAUTH_URL}/?auth=#{API_TOKEN}&cid=#{computing_id}"
+			#puts "==> #{url}"
 			response = HTTParty.get( url )
-			return response.code, response['details'] if status_ok?( response.code )
+			return response.code, response['details'] if self.status_ok?( response.code )
 			return response.code, response.message
 		rescue => e
 			return 500, e.message
@@ -15,8 +19,10 @@ class DepositStatus
 
 	def self.check_depositauth_endpoint
 		begin
-			response = HTTParty.get("#{DEPOSITAUTH_URL}/healthcheck")
-			if status_ok?( response.code )
+			url = "#{DEPOSITAUTH_URL}/healthcheck"
+			#puts "==> #{url}"
+			response = HTTParty.get( url )
+			if self.status_ok?( response.code )
 				return true, ''
 			else
 				return false, "Endpoint returns #{response.code}"
@@ -24,10 +30,6 @@ class DepositStatus
 		rescue => ex
 			return false, "Endpoint returns #{ex}"
 		end
-	end
-
-	def self.status_ok?( status )
-		return status == 200
 	end
 
 end

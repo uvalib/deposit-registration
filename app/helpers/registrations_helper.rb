@@ -29,7 +29,7 @@ module RegistrationsHelper
 
   def format_success_message()
 		padding = content_tag(:div, "", { class: "col-sm-2" })
-		notice = content_tag(:div, "All registrations submitted successfully.", { class: "notice col-sm-10" })
+		notice = content_tag(:div, "Registration(s) submitted successfully.", { class: "notice col-sm-10" })
 		return raw(padding + notice)
 	end
 
