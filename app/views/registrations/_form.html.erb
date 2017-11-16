@@ -1,7 +1,14 @@
 <% if flash[:notice] %>
-		<%= raw( flash[:notice] ) %>
+   <%= raw( flash[:notice] ) %>
 <% end %>
 
+<script>
+  // initializers to use later on
+  var options = [];
+  <% @options.each do |option| %>
+    options["<%= raw option["department"] %>"] = <%= raw option["degrees"].map{ |d| "#{d}" } %>;
+  <% end %>
+</script>
 
 <%= form_tag("/registrations", method: "post") do %>
 <div id="registerForm" class="form-horizontal">
@@ -17,9 +24,10 @@
 		<div class="col-sm-10">
 			<select class="form-control" id="department" name="registration[department]">
 				<option></option>
-				<% @options['department'].each { |option| %>
-					<option <%= "selected" if flash[:department] == option %>><%= option %></option>
-				<% } %>
+				<% @options.each do |option| %>
+          <% department = option["department"] %>
+					<option <%= "selected" if flash[:department] == department %>><%= department %></option>
+				<% end %>
 			</select>
 		</div>
 	</div>
@@ -29,9 +37,16 @@
 		<div class="col-sm-10">
 			<select class="form-control" id="degree" name="registration[degree]">
 				<option></option>
-				<% @options['degree'].each { |option| %>
-					<option <%= "selected" if flash[:degree] == option %>><%= option %></option>
-					<% } %>
+        <% if flash[:department] && flash[:degree] %>
+            <% @options.each do |option| %>
+                <% if option["department"] == flash[:department] %>
+                    <% option["degrees"].each do |degree| %>
+                        <option <%= "selected" if flash[:degree] == degree %>><%= degree %></option>
+                    <% end %>
+                    <% break %>
+                <% end %>
+            <% end %>
+        <% end %>
 			</select>
 		</div>
 	</div>
@@ -51,3 +66,22 @@
 
 </div>
 <% end %>
+
+<script>
+  // when the department changes, update the degree list
+  $( "#department" ).change(function() {
+      var department = $( "#department" ).val( );
+      $('#degree').empty();
+
+      // if they actually selected a department
+      if( department.length > 0 ) {
+          var degrees = options[department];
+          if( degrees.length > 1 ) {
+              $('#degree').append(new Option());
+          }
+          $.each( degrees, function( val, text ) {
+              $('#degree').append( new Option( text ) );
+          });
+      }
+  });
+</script>

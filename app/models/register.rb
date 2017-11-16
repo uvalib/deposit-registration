@@ -43,15 +43,15 @@ class Register
 			response = HTTParty.get(url)
 
 			if self.status_ok?( response.code )
-				return response['options']
-			else
-				# If the server is available, but there is an error in getting the options.
-				return {'department' => [ 'Deposit Registration Server Error' ], 'degree' => []}
+				return nil, response['options']
+      else
+        # If the server is available, but there is an error in getting the options.
+				return "Deposit Registration Server Error: #{response.code}", []
 			end
 		rescue => e
 			puts e
 			# If the server isn't available at all, it throws an exception.
-			return {'department' => [ 'Deposit Registration Server Not Available' ], 'degree' => []}
+      return "Deposit Registration Server Not Available: #{e}", []
 		end
 	end
 
