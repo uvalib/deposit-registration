@@ -4,6 +4,7 @@
     <div class="form-group">
       <div class="row">
         <div class="col-lg-6">
+          <div class="help">Query by computing ID (all or partial)</div>
           <div class="input-group">
             <%= text_field_tag :cid_lookup, params[:cid_lookup], value: @cid_lookup, placeholder: 'Enter Computing Id...', :class => "form-control" %>
             <span class="input-group-btn">
@@ -14,13 +15,13 @@
       </div>
     </div>
 
-    <!-- Disable this feature for now -->
-    <!--
+    <% if user_is_admin? %>
     <div class="form-group">
       <div class="row">
         <div class="col-lg-6">
+          <div class="help">Query by create date</div>
           <div class="input-group">
-            <%= text_field_tag :created_lookup, params[:created_lookup], value: @created_lookup, placeholder: 'Enter received date...', :class => "form-control date-picker" %>
+            <%= text_field_tag :created_lookup, params[:created_lookup], value: @created_lookup, placeholder: 'Received on or after this date...', :class => "form-control date-picker" %>
             <span class="input-group-btn">
                <button class="btn btn-success">Lookup</button>
             </span>
@@ -32,8 +33,9 @@
     <div class="form-group">
       <div class="row">
         <div class="col-lg-6">
+          <div class="help">Query by export date</div>
           <div class="input-group">
-            <%= text_field_tag :exported_lookup, params[:exported_lookup], value: @exported_lookup, placeholder: 'Enter exported date...', :class => "form-control date-picker" %>
+            <%= text_field_tag :exported_lookup, params[:exported_lookup], value: @exported_lookup, placeholder: 'Exported on or after this date...', :class => "form-control date-picker" %>
             <span class="input-group-btn">
                <button class="btn btn-success">Lookup</button>
             </span>
@@ -41,7 +43,7 @@
         </div>
       </div>
     </div>
-    -->
+    <% end %>
 
 <% end %>
 
