@@ -38,7 +38,7 @@ class Register
 	def self.options()
 
 		begin
-			url = "#{DEPOSITREG_URL}/options"
+			url = "#{DEPOSITREG_URL}/optionmap"
 			#puts "==> #{url}"
 			response = HTTParty.get(url)
 
