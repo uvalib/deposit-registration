@@ -55,3 +55,5 @@ gem 'normalize-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-datatables-rails'
 gem 'bootstrap-sass'
+
+gem 'prometheus-client'
