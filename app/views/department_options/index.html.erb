@@ -1,0 +1,51 @@
+<h2>Create Degrees and Departments</h2>
+<div class="row">
+  <div class="col-sm-6">
+    <%= render 'new_department_form' %>
+  </div>
+  <div class="col-sm-6">
+    <%= render 'new_degree_form' %>
+  </div>
+</div>
+<hr/>
+
+
+<h2>Edit Department Degrees</h2>
+<% @options.each do |o| %>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab">
+      <h4 class="panel-title">
+        <button type="button" class="btn btn-primary"
+                              data-toggle="modal"
+                              data-target="#formModal"
+                              data-degrees="<%= o['degrees'].join('|') %>"
+                              data-department="<%= o['department'] %>"
+                              >
+            Edit
+          </button>
+        <%= o['department'] %>
+      </h4>
+    </div>
+
+    <div class="panel-body">
+      <ul>
+        <% o['degrees'].each do |d| %>
+          <li> <%= d %> </li>
+        <%end%>
+      </ul>
+    </div>
+  </div>
+<%end%>
+
+<div class="modal" id="formModal" role="dialog" data-target="#formModal">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id='modal-header'></h4>
+      </div>
+      <div class="modal-body">
+        <%= render 'edit_degree_form' %>
+      </div>
+    </div>
+  </div>
+</div>

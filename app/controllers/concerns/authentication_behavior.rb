@@ -1,13 +1,13 @@
 module AuthenticationBehavior
-	extend ActiveSupport::Concern
+  extend ActiveSupport::Concern
 
-	included do
-		before_action :require_auth
-	end
+  included do
+    before_action :require_auth
+  end
 
-	private
+  private
 
-	def require_auth
+  def require_auth
 
     #
     # if we cannot get the user, then raise an exception...
@@ -15,13 +15,13 @@ module AuthenticationBehavior
 
     @current_user = current_user( )
     if @current_user.blank?
-			raise ActionController::RoutingError.new( 'Forbidden' )
-		end
+      raise ActionController::RoutingError.new( 'Forbidden' )
+    end
 
-	end
+  end
 
   #
-  # determine tyhe current user
+  # determine the current user
   #
   def current_user
     return ENV['HTTP_REMOTE_USER'] if Rails.env == 'development'

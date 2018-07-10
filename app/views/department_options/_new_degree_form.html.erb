@@ -1,0 +1,7 @@
+<%= form_for :new_degree, class: 'form-inline' do |f| %>
+  <div class="form-group">
+    <%= f.text_field :name, placeholder: "Degree Name", class: "form-control" %>
+  </div>
+  <%= f.submit "Create Degree", class: 'btn btn-primary',
+    data: {confirm: 'Are you sure you want to create this degree?'} %>
+<%end%>

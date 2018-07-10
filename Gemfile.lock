@@ -93,6 +93,8 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
+    multi-select-rails (0.9.12)
+      railties (>= 3.0)
     multi_json (1.12.2)
     multi_xml (0.6.0)
     nio4r (2.1.0)
@@ -190,6 +192,7 @@ DEPENDENCIES
   jquery-ui-rails
   json
   listen (~> 3.0.5)
+  multi-select-rails
   normalize-rails
   prometheus-client
   puma (~> 3.0)
@@ -203,4 +206,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   1.16.1
+   1.16.2

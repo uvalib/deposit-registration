@@ -14,5 +14,9 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery-ui
+//= require bootstrap/transition
+//= require bootstrap/collapse
+//= require bootstrap/modal
 //= require dataTables/jquery.dataTables
+//= require multi-select
 //= require_tree .

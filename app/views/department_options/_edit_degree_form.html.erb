@@ -1,0 +1,9 @@
+<%= form_for :department_options, class: "form" do |f| %>
+  <%= hidden_field :department, nil %>
+
+  <%= f.select :degrees, options_for_select(@all_degrees), {}, multiple: true, include_blank: true %>
+  <hr/>
+  <%= f.submit "Update", class: "btn btn-primary", data: {confirm: 'Are you sure you want to update this department with these degrees?'} %>
+
+  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+<%end%>
