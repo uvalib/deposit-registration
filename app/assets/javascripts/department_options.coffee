@@ -4,6 +4,7 @@ $ ->
     department = button.data('department')
     degrees = button.data('degrees').split('|')
     $('#modal-header').html(department)
+    $('#department_options_department').val(department)
 
     $('#department_options_degrees').multiSelect().multiSelect('deselect_all').multiSelect('select', degrees)
 

@@ -1,5 +1,5 @@
-<%= form_for :department_options, class: "form" do |f| %>
-  <%= hidden_field :department, nil %>
+<%= form_for :department_options, method: :patch, class: "form" do |f| %>
+  <%= hidden_field :department_options, :department %>
 
   <%= f.select :degrees, options_for_select(@all_degrees), {}, multiple: true, include_blank: true %>
   <hr/>

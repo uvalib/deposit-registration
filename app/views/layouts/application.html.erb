@@ -16,6 +16,9 @@
   <div id="libra_container">
 	  <%= render "/layouts/masthead" %>
 	  <div class="wrapper">
+      <% if flash[:notice] %>
+        <%= raw( flash[:notice] ) %>
+      <% end %>
       <%= yield %>
     </div>
     <%= render "/shared/footer" %>

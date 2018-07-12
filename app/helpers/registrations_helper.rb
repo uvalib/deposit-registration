@@ -38,5 +38,10 @@ module RegistrationsHelper
     return raw (padding + content_tag(:div, message, { class: 'error_message col-sm-10'}))
   end
 
+  def format_success_message message
+    padding = content_tag(:div, "", { class: "col-sm-2" })
+    return raw (padding + content_tag(:div, message, { class: 'alert alert-success col-sm-10'}))
+  end
+
 
 end

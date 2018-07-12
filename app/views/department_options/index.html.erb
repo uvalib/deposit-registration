@@ -1,3 +1,5 @@
+<%= link_to "Back to Registrations", new_registration_path, class: 'btn btn-primary pull-right' %>
+
 <h2>Create Degrees and Departments</h2>
 <div class="row">
   <div class="col-sm-6">
@@ -15,12 +17,13 @@
   <div class="panel panel-default">
     <div class="panel-heading" role="tab">
       <h4 class="panel-title">
-        <button type="button" class="btn btn-primary"
-                              data-toggle="modal"
-                              data-target="#formModal"
-                              data-degrees="<%= o['degrees'].join('|') %>"
-                              data-department="<%= o['department'] %>"
-                              >
+        <button type="button"
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#formModal"
+                data-degrees="<%= o['degrees'].join('|') %>"
+                data-department="<%= o['department'] %>"
+                >
             Edit
           </button>
         <%= o['department'] %>

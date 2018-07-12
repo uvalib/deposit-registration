@@ -1,1 +1,5 @@
+<%= link_to "Edit Departments and Degrees", department_options_path,
+  class: 'btn btn-primary pull-right' if user_is_admin?
+%>
+
 <%= render 'form' %>
