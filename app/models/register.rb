@@ -43,7 +43,7 @@ class Register
       response = HTTParty.get(url)
 
       if self.status_ok?( response.code )
-        return nil, response['options']
+        return nil, response['options'].sort_by! {|opt| opt['department'].downcase }
       else
         # If the server is available, but there is an error in getting the options.
         return "Deposit Registration Server Error: #{response.code}", []
