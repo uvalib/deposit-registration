@@ -2,7 +2,7 @@ class RegistrationsController < ApplicationController
 
   def new
     @title = 'Libra Deposit Registration'
-    @instructions = view_context.link_to 'Instructions for Registrars', 'http://www.library.virginia.edu/libra/libra-optional-deposit', target: '_blank'
+    @instructions = view_context.link_to 'Instructions for Registrars', 'https://www.library.virginia.edu/libra/etds/libra-optional-deposit', target: '_blank'
     error, @options = Register.options
     flash[:notice] = view_context.format_service_error_message( error ) if error.present?
   end
