@@ -13,14 +13,13 @@ RUN cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Add necessary gems
 RUN gem install bundler io-console --no-ri --no-rdoc
 
-# Copy the Gemfile into the image and temporarily set the working directory to where they are.
-WORKDIR /tmp
-ADD Gemfile Gemfile
-RUN bundle install
-
 # Specify home 
 ENV APP_HOME /deposit-register
 WORKDIR $APP_HOME
+
+# Copy the Gemfile into the image and install the gems
+ADD Gemfile ./
+RUN bundle install --jobs=4 --without=["development" "test"] --no-cache
 
 # install the app and bundle
 COPY . $APP_HOME
