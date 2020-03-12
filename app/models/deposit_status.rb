@@ -3,18 +3,21 @@ class DepositStatus
    # Adds status check behavior
    include StatusBehavior
 
+   # include auto token support
+   include AuthtokenBehavior
+
    def self.status_by_cid( computing_id )
-     url = "#{DEPOSITAUTH_URL}/?auth=#{API_TOKEN}&cid=#{computing_id}"
+     url = "#{DEPOSITAUTH_URL}/?auth=#{self.authtoken( AUTH_SHARED_SECRET )}&cid=#{computing_id}"
      return( self.get_status( url ) )
    end
 
    def self.status_by_created( created )
-     url = "#{DEPOSITAUTH_URL}/?auth=#{API_TOKEN}&created=#{created}"
+     url = "#{DEPOSITAUTH_URL}/?auth=#{self.authtoken( AUTH_SHARED_SECRET )}&created=#{created}"
      return( self.get_status( url ) )
    end
 
    def self.status_by_exported( exported )
-     url = "#{DEPOSITAUTH_URL}/?auth=#{API_TOKEN}&exported=#{exported}"
+     url = "#{DEPOSITAUTH_URL}/?auth=#{self.authtoken( AUTH_SHARED_SECRET )}&exported=#{exported}"
      return( self.get_status( url ) )
    end
 

@@ -59,3 +59,6 @@ gem 'bootstrap-sass'
 gem 'multi-select-rails'
 
 gem 'prometheus-client'
+
+# service auth
+gem 'jwt'

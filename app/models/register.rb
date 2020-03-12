@@ -3,6 +3,9 @@ class Register
   # Adds status check behavior
   include StatusBehavior
 
+  # include auto token support
+  include AuthtokenBehavior
+
   def self.validate_department( department )
     department.nil? == false && department.blank? == false
   end
@@ -18,7 +21,7 @@ class Register
       ids = Register.parse_user_ids( user_id_list )
       invalid_ids = []
       ids.each { |computing_id|
-        url = "#{USERINFO_URL}/user/#{computing_id}?auth=#{API_TOKEN}"
+        url = "#{USERINFO_URL}/user/#{computing_id}?auth=#{self.authtoken( AUTH_SHARED_SECRET )}"
         #puts "==> #{url}"
         response = HTTParty.get(url)
 
@@ -77,7 +80,7 @@ class Register
   def self.register(requester, department, degree, computing_id_list)
 
     begin
-      url = "#{DEPOSITREG_URL}/?auth=#{API_TOKEN}"
+      url = "#{DEPOSITREG_URL}/?auth=#{self.authtoken( AUTH_SHARED_SECRET )}"
       #puts "==> #{url}"
       ids = Register.parse_user_ids(computing_id_list)
       ids = ids.join(",")

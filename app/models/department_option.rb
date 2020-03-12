@@ -3,6 +3,9 @@ class DepartmentOption
    # Adds status check behavior
    include StatusBehavior
 
+   # include auto token support
+   include AuthtokenBehavior
+
   def self.create_department name
     create_option 'department', name
 
@@ -16,7 +19,7 @@ class DepartmentOption
     begin
       degrees.reject! &:blank?
 
-      url = "#{DEPOSITREG_URL}/optionmap?auth=#{API_TOKEN}"
+      url = "#{DEPOSITREG_URL}/optionmap?auth=#{self.authtoken( AUTH_SHARED_SECRET )}"
       data = { department: department, degrees: degrees }
       response = HTTParty.put(url, body: JSON.dump(data), headers: { 'Content-Type' => 'application/json' })
       puts response
@@ -37,7 +40,7 @@ class DepartmentOption
   def self.create_option option, name
     raise "Bad option name" unless ['department', 'degree'].include?(option)
     begin
-      url = "#{DEPOSITREG_URL}/options?auth=#{API_TOKEN}"
+      url = "#{DEPOSITREG_URL}/options?auth=#{self.authtoken( AUTH_SHARED_SECRET )}"
       data = { option: option, value: name }
       response = HTTParty.post(url, body: JSON.dump(data), headers: { 'Content-Type' => 'application/json' })
       puts response

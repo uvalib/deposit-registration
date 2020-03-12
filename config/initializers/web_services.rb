@@ -1,5 +1,5 @@
-# token used for all API calls
-API_TOKEN = ENV['API_TOKEN']
+# shared secret to create auth tokens
+AUTH_SHARED_SECRET = ENV['AUTH_SHARED_SECRET']
 
 # deposit registration service endpoint
 DEPOSITREG_URL = ENV['DEPOSITREG_URL']
