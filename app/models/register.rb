@@ -23,7 +23,7 @@ class Register
       ids.each { |computing_id|
         url = "#{USERINFO_URL}/user/#{computing_id}?auth=#{self.authtoken( AUTH_SHARED_SECRET )}"
         #puts "==> #{url}"
-        response = HTTParty.get(url)
+        response = HTTParty.get(url, { timeout: WEBSERVICE_TIMEOUT })
 
         if self.status_ok?( response.code ) == false
           invalid_ids.push( computing_id )
@@ -43,7 +43,7 @@ class Register
     begin
       url = "#{DEPOSITREG_URL}/optionmap"
       #puts "==> #{url}"
-      response = HTTParty.get(url)
+      response = HTTParty.get(url, { timeout: WEBSERVICE_TIMEOUT })
 
       if self.status_ok?( response.code )
         return nil, response['options'].sort_by! {|opt| opt['department'].downcase }
@@ -62,7 +62,7 @@ class Register
     begin
       url = "#{DEPOSITREG_URL}/options"
       #puts "==> #{url}"
-      response = HTTParty.get(url)
+      response = HTTParty.get(url, { timeout: WEBSERVICE_TIMEOUT })
 
       if self.status_ok?( response.code )
         return nil, response['options']['degrees']
@@ -105,7 +105,7 @@ class Register
     begin
       url = "#{DEPOSITREG_URL}/healthcheck"
       #puts "==> #{url}"
-      response = HTTParty.get(url)
+      response = HTTParty.get(url, { timeout: HEALTHCHECK_TIMEOUT } )
 
       if self.status_ok?( response.code )
         return true, ''
@@ -121,7 +121,7 @@ class Register
     begin
       url = "#{USERINFO_URL}/healthcheck"
       #puts "==> #{url}"
-      response = HTTParty.get(url)
+      response = HTTParty.get(url, { timeout: HEALTHCHECK_TIMEOUT } )
 
       if self.status_ok?( response.code )
         return true, ''

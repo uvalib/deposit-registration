@@ -25,7 +25,7 @@ class DepositStatus
       begin
          url = "#{DEPOSITAUTH_URL}/healthcheck"
          #puts "==> #{url}"
-         response = HTTParty.get( url )
+         response = HTTParty.get( url, { timeout: HEALTHCHECK_TIMEOUT } )
          if self.status_ok?( response.code )
             return true, ''
          else
@@ -40,7 +40,7 @@ class DepositStatus
 
       #puts "==> #{url}"
       begin
-         response = HTTParty.get( url )
+         response = HTTParty.get( url, { timeout: WEBSERVICE_TIMEOUT } )
          return response.code, response['details'] if self.status_ok?( response.code )
          return response.code, response.message
       rescue => e
