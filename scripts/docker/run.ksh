@@ -1,6 +1,12 @@
+#if [ -z "$DOCKER_HOST" ]; then
+#   echo "ERROR: no DOCKER_HOST defined"
+#   exit 1
+#fi
+
 if [ -z "$DOCKER_HOST" ]; then
-   echo "ERROR: no DOCKER_HOST defined"
-   exit 1
+   DOCKER_TOOL=docker
+else
+   DOCKER_TOOL=docker-17.04.0
 fi
 
 # set the definitions
@@ -16,18 +22,18 @@ USERINFO_URL=http://docker1.lib.virginia.edu:8010
 DOCKER_ENV="-e API_TOKEN=$API_TOKEN -e DEPOSITAUTH_URL=$DEPOSITAUTH_URL -e DEPOSITREG_URL=$DEPOSITREG_URL -e USERINFO_URL=$USERINFO_URL"
 
 # stop the running instance
-docker stop $INSTANCE
+$DOCKER_TOOL stop $INSTANCE
 
 # remove the instance
-docker rm $INSTANCE
+$DOCKER_TOOL rm $INSTANCE
 
 # remove the previously tagged version
-docker rmi $NAMESPACE/$INSTANCE:current  
+$DOCKER_TOOL rmi $NAMESPACE/$INSTANCE:current  
 
 # tag the latest as the current
-docker tag -f $NAMESPACE/$INSTANCE:latest $NAMESPACE/$INSTANCE:current
+$DOCKER_TOOL tag -f $NAMESPACE/$INSTANCE:latest $NAMESPACE/$INSTANCE:current
 
-docker run -d -p 8221:3000 $DOCKER_ENV --name $INSTANCE $NAMESPACE/$INSTANCE:latest
+$DOCKER_TOOL run -d -p 8221:3000 $DOCKER_ENV --name $INSTANCE $NAMESPACE/$INSTANCE:latest
 
 # return status
 exit $?

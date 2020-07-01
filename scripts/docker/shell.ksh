@@ -1,6 +1,12 @@
+#if [ -z "$DOCKER_HOST" ]; then
+#   echo "ERROR: no DOCKER_HOST defined"
+#   exit 1
+#fi
+
 if [ -z "$DOCKER_HOST" ]; then
-   echo "ERROR: no DOCKER_HOST defined"
-   exit 1
+   DOCKER_TOOL=docker
+else
+   DOCKER_TOOL=docker-17.04.0
 fi
 
 # set the definitions
@@ -14,4 +20,4 @@ USERINFO_URL=http://docker1.lib.virginia.edu:8010
 
 DOCKER_ENV="-e API_TOKEN=$API_TOKEN -e DEPOSITREG_URL=$DEPOSITREG_URL -e USERINFO_URL=$USERINFO_URL"
 
-docker run -t -i -p 8221:3000 $DOCKER_ENV $NAMESPACE/$INSTANCE /bin/bash -l
+$DOCKER_TOOL run -t -i -p 8221:3000 $DOCKER_ENV $NAMESPACE/$INSTANCE /bin/bash -l
