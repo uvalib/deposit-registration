@@ -109,7 +109,8 @@ GEM
     normalize-rails (4.1.1)
     prometheus-client (0.9.0)
       quantile (~> 0.2.1)
-    puma (3.12.0)
+    puma (4.3.8)
+      nio4r (~> 2.0)
     quantile (0.2.1)
     rack (2.0.6)
     rack-test (0.6.3)
@@ -206,7 +207,7 @@ DEPENDENCIES
   multi-select-rails
   normalize-rails
   prometheus-client
-  puma (~> 3.0)
+  puma (~> 4.3)
   rails (~> 5.0.1)
   sass-rails (~> 5.0)
   spring
