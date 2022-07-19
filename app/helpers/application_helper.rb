@@ -5,7 +5,7 @@ module ApplicationHelper
   #
   def user_is_admin?
     return false if @current_user.blank?
-    return true if ['dpg3k', 'ecr2c', 'sah', 'naw4t', 'arb5w'].include? @current_user
+    return true if ['dpg3k', 'sah', 'naw4t', 'arb5w', 'wkb5j'].include? @current_user
     return false
   end
 
