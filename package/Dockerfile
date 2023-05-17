@@ -11,7 +11,7 @@ ENV TZ=UTC
 RUN cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Add necessary gems
-RUN gem install bundler -v 1.17.3 --no-document && gem install io-console --no-document
+RUN gem install bundler -v 2.4.13 --no-document && gem install io-console --no-document
 
 # Specify home 
 ENV APP_HOME /deposit-register
