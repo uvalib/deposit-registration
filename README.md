@@ -7,3 +7,5 @@
 * Basic functionality has been copied from "deposit registration" application.
 
 * All authentication happens using shiboleth. If the browser can reach this app, we already know it is a legal user.
+
+* This project is archived. Functionality has moved to [libra-web](https://github.com/uvalib/libra-web).
